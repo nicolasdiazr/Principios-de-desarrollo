@@ -1,0 +1,91 @@
+import java.sql.*;
+import java.util.*;
+
+public class Actividad {
+    private String nombre;
+    private String tipo;
+    private int duracion;
+    private double emisionesCO2;
+
+    public Actividad(String nombre, String tipo, int duracion, double emisionesCO2) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.duracion = duracion;
+        this.emisionesCO2 = emisionesCO2;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public double getEmisionesCO2() {
+        return emisionesCO2;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Pide informacion
+        System.out.print("Ingrese el nombre de la actividad: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Ingrese el tipo de actividad: ");
+        String tipo = sc.nextLine();
+
+        System.out.print("Ingrese la duración de la actividad en minutos: ");
+        int duracion = sc.nextInt();
+
+        // Calcular las emisiones de CO2 generadas por la actividad
+        double emisionesCO2 = calcularEmisionesCO2(tipo, duracion);
+
+        // Mostrar las emisiones de CO2 generadas por la actividad
+        System.out.println("La actividad " + nombre + " generó " + emisionesCO2 + " kg de CO2.");
+
+        // Buscar actividades alternativas
+        List<Actividad> actividadesAlternativas = buscarActividadesAlternativas(emisionesCO2);
+
+        // Mostrar las actividades alternativas
+        if (actividadesAlternativas.isEmpty()) {
+            System.out.println("Lo siento, no hay actividades alternativas disponibles.");
+        } else {
+            System.out.println("Aquí hay algunas actividades alternativas que generan menos CO2:");
+            for (Actividad actividad : actividadesAlternativas) {
+                System.out.println("- " + actividad.getNombre() + " (" + actividad.getTipo() + ")");
+            }
+        }
+
+        // Guardar la información de la actividad en la base de datos
+        guardarActividad(nombre, tipo, duracion, emisionesCO2);
+    }
+
+    private static double calcularEmisionesCO2(String tipo, int duracion) {
+        double emisionesCO2 = 0;
+
+        if (tipo.equals("Viaje en carro")) {
+            emisionesCO2 = 0.25 * duracion;
+        } else if (tipo.equals("Viaje en bicicleta")) {
+            emisionesCO2 = 0;
+        } else if (tipo.equals("Uso de electricidad")) {
+            emisionesCO2 = 0.05 * duracion;
+        }
+
+        return emisionesCO2;
+    }
+
+    private static List<Actividad> buscarActividadesAlternativas(double emisionesCO2) {
+        // Implementar la lógica para buscar actividades alternativas
+        return new ArrayList<>(); // Devolver una lista vacía por ahora
+    }
+
+    private static void guardarActividad(String nombre, String tipo, int duracion, double emisionesCO2) {
+        // Implementar la lógica para guardar la actividad en la base de datos
+    }
+}
